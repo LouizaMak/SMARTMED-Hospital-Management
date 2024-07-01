@@ -19,7 +19,7 @@ function App() {
       <header>
         <NavBar />
       </header>
-      <Outlet context={patients} />
+      <Outlet context={[patients, setPatients]} />
     </>
   )
 }

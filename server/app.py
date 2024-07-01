@@ -19,7 +19,17 @@ class PatientIndex(Resource):
         return patients_dict, 200
     
     def post(self):
-        pass
+        data = request.get_json()
+        new_patient = Patient(
+            first_name = data.get("first_name"),
+            last_name = data.get("last_name"),
+            age = data.get("age"),
+            gender = data.get("gender")
+        )
+        db.session.add(new_patient)
+        db.session.commit()
+
+        return new_patient.to_dict(), 201 
 
 # @app.route('/')
 # def index():

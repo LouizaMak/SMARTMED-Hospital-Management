@@ -13,12 +13,20 @@ from models import db, Patient, Doctor, Appointment
 
 def create_patients():
     patients = []
-    for _ in range(20):
+    for _ in range(10):
         p = Patient(
-        first_name = fake.first_name(),
+        first_name = fake.first_name_female(),
         last_name = fake.last_name(),
         age = fake.random_int(min = 0, max = 110),
-        gender = fake.random_element(elements=('F', 'M'))
+        gender = "F"
+        )
+        patients.append(p)
+    for _ in range(10):
+        p = Patient(
+        first_name = fake.first_name_male(),
+        last_name = fake.last_name(),
+        age = fake.random_int(min = 0, max = 110),
+        gender = "M"
         )
         patients.append(p)
     return patients
@@ -43,12 +51,21 @@ def generate_taxonomy():
     
 def create_doctors():
     doctors = []
-    for _ in range(20):
+    for _ in range(10):
         d = Doctor(
             npi = generate_npi(),
-            first_name = fake.first_name(),
+            first_name = fake.first_name_female(),
             last_name = fake.last_name(),
-            gender = fake.random_element(elements=('F', 'M')),
+            gender = "F",
+            field = generate_taxonomy()
+        )
+        doctors.append(d)
+    for _ in range(10):
+        d = Doctor(
+            npi = generate_npi(),
+            first_name = fake.first_name_male(),
+            last_name = fake.last_name(),
+            gender = "M",
             field = generate_taxonomy()
         )
         doctors.append(d)
@@ -57,8 +74,10 @@ def create_doctors():
 def create_appointments(patients, doctors):
     appointments = []
     for _ in range(20):
+        date_obj = fake.future_date(end_date = '+365d')
+        date = date_obj.strftime('%Y-%m-%d')
         a = Appointment(
-            date = fake.date(),
+            date = date,
             hour = fake.random_int(min = 8, max = 17),
             patient_id = choice(patients).id,
             doctor_id = choice(doctors).id

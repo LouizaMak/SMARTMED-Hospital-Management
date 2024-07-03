@@ -14,7 +14,7 @@ from models import Patient, Doctor, Appointment
 # Views go here!
 class PatientIndex(Resource):
     def get(self):
-        patients_dict = [patient.to_dict() for patient in Patient.query.all()]
+        patients_dict = [patient.to_dict() for patient in Patient.query.order_by(Patient.last_name).all()]
         return patients_dict, 200
     
     def post(self):
@@ -32,7 +32,7 @@ class PatientIndex(Resource):
     
 class DoctorIndex(Resource):
     def get(self):
-        doctors_dict = [doctor.to_dict() for doctor in Doctor.query.all()]
+        doctors_dict = [doctor.to_dict() for doctor in Doctor.query.order_by(Doctor.last_name).all()]
         return doctors_dict, 200
     
     def post(self):

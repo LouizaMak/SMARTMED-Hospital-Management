@@ -12,6 +12,14 @@ function NavBar() {
             to="/patients"
             className="nav-link"
             activeClassName="active">Patients Index</NavLink>
+            <NavLink
+            to="/doctors"
+            className="nav-link"
+            activeClassName="active">Doctors Index</NavLink>
+            <NavLink
+            to="/appointments"
+            className="nav-link"
+            activeClassName="active">Appointments</NavLink>
         </nav>
     )
 

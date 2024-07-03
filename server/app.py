@@ -51,7 +51,7 @@ class DoctorIndex(Resource):
     
 class AppointmentIndex(Resource):
     def get(self):
-        appointments_dict = [appointment.to_dict() for appointment in Appointment.query.all()]
+        appointments_dict = [appointment.to_dict() for appointment in Appointment.query.order_by(Appointment.date).all()]
         return appointments_dict, 200
     
     def post(self):

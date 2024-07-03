@@ -11,21 +11,29 @@ from faker import Faker
 from app import app
 from models import db, Patient, Doctor, Appointment
 
+def birthday_calculator(age):
+    string = [str(2024 - age), "0" + str(randint(1,6)), "0" + str(randint(1,30))]
+    return '-'.join(string)
+
 def create_patients():
     patients = []
     for _ in range(10):
+        age_random = fake.random_int(min = 0, max = 110)
         p = Patient(
         first_name = fake.first_name_female(),
         last_name = fake.last_name(),
-        age = fake.random_int(min = 0, max = 110),
+        age = age_random,
+        birthday = birthday_calculator(age_random),
         gender = "F"
         )
         patients.append(p)
     for _ in range(10):
+        age_random = fake.random_int(min = 0, max = 110)
         p = Patient(
         first_name = fake.first_name_male(),
         last_name = fake.last_name(),
-        age = fake.random_int(min = 0, max = 110),
+        age = age_random,
+        birthday = birthday_calculator(age_random),
         gender = "M"
         )
         patients.append(p)
@@ -71,6 +79,12 @@ def create_doctors():
         doctors.append(d)
     return doctors
 
+def reason_generator(num):
+    reasons = ["annual checkup", "sick visit", "woman's wellness exam", "scheduled surgery", 
+               "ultrasound", "follow-up appointment", "mental health concerns", "joint paint",
+               "skin issues", "cholesterol concerns"]
+    return reasons[num]
+
 def create_appointments(patients, doctors):
     appointments = []
     for _ in range(20):
@@ -79,6 +93,7 @@ def create_appointments(patients, doctors):
         a = Appointment(
             date = date,
             hour = fake.random_int(min = 8, max = 17),
+            reason = reason_generator(randint(0,9)),
             patient_id = choice(patients).id,
             doctor_id = choice(doctors).id
         )

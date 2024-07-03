@@ -10,6 +10,7 @@ class Patient(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     first_name = db.Column(db.String, nullable = False)
     last_name = db.Column(db.String, nullable = False)
+    birthday = db.Column(db.String, nullable = False)
     age = db.Column(db.Integer, nullable = False)
     gender = db.Column(db.String, nullable = False)
 
@@ -37,6 +38,7 @@ class Appointment(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.String, nullable = False)
     hour = db.Column(db.Integer, nullable = False)
+    reason = db.Column(db.String, nullable = False)
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
 

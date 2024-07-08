@@ -1,6 +1,7 @@
 import App from './components/App';
 import Patients from './components/Patients';
 import Doctors from './components/Doctors';
+import Appointments from './components/Appointments';
 
 const routes = [
     {
@@ -14,6 +15,10 @@ const routes = [
             {
                 path: "/doctors",
                 element: <Doctors />
+            },
+            {
+                path: "/appointments",
+                element: <Appointments />
             }
         ]
     }

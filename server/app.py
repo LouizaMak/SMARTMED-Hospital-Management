@@ -60,7 +60,8 @@ class AppointmentIndex(Resource):
             date = data.get("date"),
             hour = data.get("hour"),
             patient_id = data.get("patient_id"),
-            doctor_id = data.get("doctor_id")
+            doctor_id = data.get("doctor_id"),
+            reason = data.get("reason")
         )
         db.session.add(new_appointment)
         db.session.commit()

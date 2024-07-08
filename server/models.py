@@ -49,7 +49,7 @@ class Appointment(db.Model, SerializerMixin):
 
     @validates('hour')
     def validate_age(self, key, value):
-        if 8 <= value <= 17:
+        if 8 <= int(value) <= 17:
             return value
         else:
             raise ValueError("Patient's age is invalid. Please enter an age between 0 and 110 inclusive.")

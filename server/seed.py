@@ -80,9 +80,9 @@ def create_doctors():
     return doctors
 
 def reason_generator(num):
-    reasons = ["annual checkup", "sick visit", "woman's wellness exam", "scheduled surgery", 
-               "ultrasound", "follow-up appointment", "mental health concerns", "joint paint",
-               "skin issues", "cholesterol concerns"]
+    reasons = ["Annual checkup", "Sick visit", "Woman's wellness exam", "Scheduled surgery", 
+               "Ultrasound", "Follow-up appointment", "Mental health concerns", "Joint paint",
+               "Skin issues", "Cholesterol concerns"]
     return reasons[num]
 
 def create_appointments(patients, doctors):

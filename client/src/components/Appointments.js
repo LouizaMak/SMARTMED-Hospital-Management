@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 
 function Appointments() {
-    const {patients} = useOutletContext()
-    const [appointments, setAppointments] = useState([])
-    const [date, setDate] = useState("")
-    const [hour, setHour] = useState("")
-    const [reason, setReason] = useState("")
-    const [patient, setPatient] = useState("")
-    const [doctor, setDoctor] = useState("")
+    const {patients} = useOutletContext();
+    const {doctors} = useOutletContext();
+    const [appointments, setAppointments] = useState([]);
+    const [date, setDate] = useState("");
+    const [hour, setHour] = useState("");
+    const [reason, setReason] = useState("");
+    const [patient, setPatient] = useState("");
+    const [doctor, setDoctor] = useState("");
 
     useEffect(() => {
         fetch("http://127.0.0.1:5555/appointments")
@@ -73,11 +74,9 @@ function Appointments() {
         setDate("")
         setHour("")
         setReason("")
-        setPatient("")
-        setDoctor("")
     }  
 
-    console.log(patient)
+    console.log(patients[0])
 
     return(
         <>
@@ -92,7 +91,9 @@ function Appointments() {
                 <input type="text" placeholder="Hour" name="hour" value={hour} onChange={handleFormInput} required/>
 
                 <label>Doctor</label>
-                <input type="text" placeholder="Doctor" name="doctor" value={doctor} onChange={handleFormInput} required/>
+                <select name="doctor" onChange={handleFormInput} required>
+                    {doctors.map(doctor => <option value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
+                </select>
 
                 <label>Patient</label>
                 <select name="patient" onChange={handleFormInput} required>

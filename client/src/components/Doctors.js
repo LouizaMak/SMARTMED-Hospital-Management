@@ -1,19 +1,14 @@
+import { useOutletContext } from "react-router-dom";
 import DoctorCard from "./DoctorCard";
 import { useEffect, useState } from "react";
 
 function Doctors() {
-    const [doctors, setDoctors] = useState([])
+    const {doctors, setDoctors} = useOutletContext();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastname] = useState("");
     const [npi, setNPI] = useState("");
     const [gender, setGender] = useState("");
     const [field, setField] = useState("");
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:5555/doctors")
-        .then(res => res.json())
-        .then(doctors => setDoctors(doctors))
-      }, [])
 
     //Pop-up form
     useEffect(() => {

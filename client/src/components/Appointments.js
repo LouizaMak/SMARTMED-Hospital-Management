@@ -76,8 +76,6 @@ function Appointments() {
         setReason("")
     }  
 
-    console.log(patients[0])
-
     return(
         <>
         <h1>Appointments</h1>

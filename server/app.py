@@ -22,6 +22,7 @@ class PatientIndex(Resource):
         new_patient = Patient(
             first_name = data.get("first_name"),
             last_name = data.get("last_name"),
+            birthday = data.get("birthday"),
             age = data.get("age"),
             gender = data.get("gender")
         )

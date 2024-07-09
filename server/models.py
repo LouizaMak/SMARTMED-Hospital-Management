@@ -20,7 +20,7 @@ class Patient(db.Model, SerializerMixin):
 
     @validates('age')
     def validate_age(self, key, value):
-        if 0 <= value <= 110:
+        if 0 <= int(value) <= 110:
             return value
         else:
             raise ValueError("Patient's age is invalid. Please enter an age between 0 and 110 inclusive.")

@@ -68,10 +68,21 @@ class AppointmentIndex(Resource):
         db.session.commit()
 
         return new_appointment.to_dict(), 201
+    
+class AppointmentDetails(Resource):
+    def get(self, id):
+        appointment = Appointment.query.get(id)
+        if appointment:
+            return appointment.to_dict(), 200
+        return {"message": "Appointment not found"}, 404
+
+    def update(self):
+        pass
 
 api.add_resource(PatientIndex, '/patients', endpoint='patients')
 api.add_resource(DoctorIndex, '/doctors', endpoint='doctors')
 api.add_resource(AppointmentIndex, '/appointments', endpoint='appointments')
+api.add_resource(AppointmentDetails, '/appointments/<id>', endpoint='appointment_details' )
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

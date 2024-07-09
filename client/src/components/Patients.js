@@ -1,19 +1,13 @@
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext } from "react-router-dom";
 import PatientCard from "./PatientCard";
 import { useEffect, useState } from "react";
 
 function Patients() {
-    const [patients, setPatients] = useState([]);
+    const {patients, setPatients} = useOutletContext()
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastname] = useState("");
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:5555/patients")
-        .then(res => res.json())
-        .then(patients => setPatients(patients))
-      }, [])
 
     //Pop-up form
     useEffect(() => {

@@ -1,13 +1,13 @@
-import {useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 
 function Appointments() {
-
+    const {patients} = useOutletContext()
     const [appointments, setAppointments] = useState([])
     const [date, setDate] = useState("")
     const [hour, setHour] = useState("")
     const [reason, setReason] = useState("")
-    //Figure out how to access patients and doctors to transform into ID for post request
     const [patient, setPatient] = useState("")
     const [doctor, setDoctor] = useState("")
 
@@ -77,6 +77,8 @@ function Appointments() {
         setDoctor("")
     }  
 
+    console.log(patient)
+
     return(
         <>
         <h1>Appointments</h1>
@@ -93,8 +95,10 @@ function Appointments() {
                 <input type="text" placeholder="Doctor" name="doctor" value={doctor} onChange={handleFormInput} required/>
 
                 <label>Patient</label>
-                <input type="text" placeholder="Patient" name="patient" value={patient} onChange={handleFormInput} required/>
-
+                <select name="patient" onChange={handleFormInput} required>
+                    {patients.map(patient => <option value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
+                </select>
+    
                 <label>Reason</label>
                 <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
 

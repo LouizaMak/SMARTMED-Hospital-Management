@@ -73,7 +73,7 @@ function Appointments() {
     return(
         <>
         <h1>Appointments</h1>
-        <button className="open-button" onClick={handleOpenForm}>Add New Appointment</button>
+        <button className="open-button" onClick={handleOpenForm}>Schedule New Appointment</button>
         <div className="form-popup" id="appointmentForm" onSubmit={handleAddSubmit}>
             <form class="form-container">
                 <label>Date</label>
@@ -84,11 +84,13 @@ function Appointments() {
 
                 <label>Doctor</label>
                 <select name="doctor" onChange={handleFormInput} required>
+                    <option value="" disabled selected>Select Doctor</option>
                     {doctors.map(doctor => <option value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
                 </select>
 
                 <label>Patient</label>
-                <select name="patient" onChange={handleFormInput} required>
+                <select name="patient" placeholder="patients" onChange={handleFormInput} required>
+                    <option value="" disabled selected>Select Patient</option>
                     {patients.map(patient => <option value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
                 </select>
     

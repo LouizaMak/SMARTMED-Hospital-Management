@@ -5,6 +5,7 @@ import NavBar from './NavBar'
 function App() {
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/patients")
@@ -18,13 +19,20 @@ function App() {
     .then(doctors => setDoctors(doctors))
   }, [])
 
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/appointments")
+    .then(res => res.json())
+    .then(appointments => setAppointments(appointments))
+  }, [])
+
+
   return (
     <>
       <h1>Hospital Manager</h1>
       <header>
         <NavBar />
       </header>
-      <Outlet context={{patients, setPatients, doctors, setDoctors}}/>
+      <Outlet context={{patients, setPatients, doctors, setDoctors, appointments, setAppointments}}/>
     </>
   )
 }

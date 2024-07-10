@@ -10,8 +10,6 @@ function Patients() {
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
 
-    console.log(birthday)
-
     //Pop-up form
     useEffect(() => {
         handleCloseForm()

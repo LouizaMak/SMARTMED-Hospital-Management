@@ -79,6 +79,14 @@ class AppointmentDetails(Resource):
     def update(self):
         pass
 
+    def delete(self, id):
+        appointment = Appointment.query.get(id)
+        appointment_dict = appointment.to_dict()
+        db.session.delete(appointment)
+        db.session.commit()
+
+        return appointment_dict, 200
+
 api.add_resource(PatientIndex, '/patients', endpoint='patients')
 api.add_resource(DoctorIndex, '/doctors', endpoint='doctors')
 api.add_resource(AppointmentIndex, '/appointments', endpoint='appointments')

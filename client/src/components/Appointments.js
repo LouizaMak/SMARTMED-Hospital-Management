@@ -3,20 +3,14 @@ import React, { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 
 function Appointments() {
+    const {appointments, setAppointments} = useOutletContext();
     const {patients} = useOutletContext();
     const {doctors} = useOutletContext();
-    const [appointments, setAppointments] = useState([]);
     const [date, setDate] = useState("");
     const [hour, setHour] = useState("");
     const [reason, setReason] = useState("");
     const [patient, setPatient] = useState("");
     const [doctor, setDoctor] = useState("");
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:5555/appointments")
-        .then(res => res.json())
-        .then(appointments => setAppointments(appointments))
-      }, [])
 
     //Pop-up form
     useEffect(() => {

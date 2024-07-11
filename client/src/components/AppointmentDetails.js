@@ -49,7 +49,8 @@ function AppointmentDetails() {
         }
     }
 
-    function handleUpdate() {
+    function handleUpdate(event) {
+        event.preventDefault();
         fetch(`http://127.0.0.1:5555/appointments/${id}`, {
             method: 'PATCH',
             headers: {
@@ -63,7 +64,15 @@ function AppointmentDetails() {
             })
         })
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then(updatedAppointment => {
+            appointments.map(appointment => {
+                if(appointment.id === updatedAppointment.id) {
+                    return updatedAppointment
+                } else return appointment
+            })
+            setAppointment(updatedAppointment)
+        })
+        handleToggleForm()
     }
 
     function handleDelete() {
@@ -85,27 +94,27 @@ function AppointmentDetails() {
             <>
                 <button className="open-button" onClick={handleToggleForm}>Update</button>
                 {isUpdating ? (
-                    <div className="form-popup" id="updateForm" onSubmit={handleUpdate}>
-                    <form class="form-container">
-                        <label>Date</label>
-                        <input type="text" placeholder="Date" name="date" value={date} onChange={handleFormInput} required/>
+                    <div className="form-popup" id="updateForm">
+                        <form className="form-container" onSubmit={handleUpdate}>
+                            <label>Date</label>
+                            <input type="text" placeholder="Date" name="date" value={date} onChange={handleFormInput} required/>
 
-                        <label>Hour</label>
-                        <input type="text" placeholder="Hour" name="hour" value={hour} onChange={handleFormInput} required/>
+                            <label>Hour</label>
+                            <input type="text" placeholder="Hour" name="hour" value={hour} onChange={handleFormInput} required/>
 
-                        <label>Doctor</label>
-                        <select name="doctor" onChange={handleFormInput} required>
-                            <option value="" disabled selected>Select Doctor</option>
-                            {doctors.map(doctor => <option value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
-                        </select>
+                            <label>Doctor</label>
+                            <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
+                                <option value="" disabled>Select Doctor</option>
+                                {doctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
+                            </select>
 
-                        <label>Reason</label>
-                        <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
+                            <label>Reason</label>
+                            <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
 
-                        <button type="submit" className="btn">Confirm</button>
-                        <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
-                    </form>
-                </div>
+                            <button type="submit" className="btn">Confirm</button>
+                            <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
+                        </form>
+                    </div>
                 ) : ("")}
                 <div>
                     <h3>Appointment Overview</h3>

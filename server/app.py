@@ -76,8 +76,14 @@ class AppointmentDetails(Resource):
             return appointment.to_dict(), 200
         return {"message": "Appointment not found"}, 404
 
-    def update(self, id):
-        pass
+    def patch(self, id):
+        data = request.get_json()
+        appointment = Appointment.query.get(id)
+        for attr in data:
+            setattr(appointment, attr, data[attr])
+        db.session.add(appointment)
+        db.session.commit()
+        return appointment.to_dict(), 200
 
     def delete(self, id):
         appointment = Appointment.query.get(id)

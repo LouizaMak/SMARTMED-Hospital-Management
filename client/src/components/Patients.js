@@ -54,6 +54,7 @@ function Patients() {
         .then(newPatient => {
             setPatients([...patients, newPatient])
             clearForm()
+            handleToggleForm()
         })
         .catch(error => {
             console.error("Error adding new patient:", error)
@@ -73,27 +74,27 @@ function Patients() {
             <h1>Patient Index</h1>
             <button className="open-button" onClick={handleToggleForm}>Add New Patient</button>
             {isUpdating ? (
-                <div className="form-popup" id="patientForm" onSubmit={handleAddSubmit}>
-                <form class="form-container">
-                    <label>First Name</label>
-                    <input type="text" placeholder="First Name" name="firstName" value={firstName} onChange={handleFormInput} required/>
+                <div className="form-popup" id="patientForm" >
+                    <form className="form-container" onSubmit={handleAddSubmit}>
+                        <label>First Name</label>
+                        <input type="text" placeholder="First Name" name="firstName" value={firstName} onChange={handleFormInput} required/>
 
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Last Name" name="lastName" value={lastName} onChange={handleFormInput} required/>
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Last Name" name="lastName" value={lastName} onChange={handleFormInput} required/>
 
-                    <label>Birthday</label>
-                    <input type="text" placeholder="Birthday" name="birthday" value={birthday} onChange={handleFormInput} required/>
+                        <label>Birthday</label>
+                        <input type="text" placeholder="Birthday" name="birthday" value={birthday} onChange={handleFormInput} required/>
 
-                    <label>Age</label>
-                    <input type="text" placeholder="Age" name="age" value={age} onChange={handleFormInput} required/>
+                        <label>Age</label>
+                        <input type="text" placeholder="Age" name="age" value={age} onChange={handleFormInput} required/>
 
-                    <label>Gender</label>
-                    <input type="text" placeholder="Gender" name="gender" value={gender} onChange={handleFormInput} required/>
+                        <label>Gender</label>
+                        <input type="text" placeholder="Gender" name="gender" value={gender} onChange={handleFormInput} required/>
 
-                    <button type="submit" className="btn">Add</button>
-                    <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
-                </form>
-            </div>
+                        <button type="submit" className="btn">Add</button>
+                        <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
+                    </form>
+                </div>
             ) : ("")}
             {patients.map(patient => <PatientCard key={patient.id} patient={patient}/>)}
         </>

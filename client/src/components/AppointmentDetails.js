@@ -29,6 +29,7 @@ function AppointmentDetails() {
         }
     }
 
+    //Pop-up form
     function handleToggleForm() {
         setIsUpdating(!isUpdating)
     }

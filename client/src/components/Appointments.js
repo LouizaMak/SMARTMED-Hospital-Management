@@ -1,11 +1,14 @@
 import { useOutletContext } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 
 function Appointments() {
     const {appointments, setAppointments} = useOutletContext();
     const {patients} = useOutletContext();
     const {doctors} = useOutletContext();
+    const [isUpdating, setIsUpdating] = useState(false);
+
+    //Post form states
     const [date, setDate] = useState("");
     const [hour, setHour] = useState("");
     const [reason, setReason] = useState("");
@@ -13,16 +16,8 @@ function Appointments() {
     const [doctor, setDoctor] = useState("");
 
     //Pop-up form
-    useEffect(() => {
-        handleCloseForm()
-    }, [])
-
-    function handleOpenForm() {
-        document.getElementById("appointmentForm").style.display = "block";
-    }
-
-    function handleCloseForm() {
-        document.getElementById("appointmentForm").style.display = "none";
+    function handleToggleForm() {
+        setIsUpdating(!isUpdating)
     }
 
     //Form data
@@ -73,8 +68,9 @@ function Appointments() {
     return(
         <>
         <h1>Appointments</h1>
-        <button className="open-button" onClick={handleOpenForm}>Schedule New Appointment</button>
-        <div className="form-popup" id="appointmentForm" onSubmit={handleAddSubmit}>
+        <button className="open-button" onClick={handleToggleForm}>Schedule New Appointment</button>
+        {isUpdating ? (
+            <div className="form-popup" id="appointmentForm" onSubmit={handleAddSubmit}>
             <form class="form-container">
                 <label>Date</label>
                 <input type="text" placeholder="Date" name="date" value={date} onChange={handleFormInput} required/>
@@ -98,9 +94,10 @@ function Appointments() {
                 <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
 
                 <button type="submit" className="btn">Add</button>
-                <button type="button" className="btn cancel" onClick={handleCloseForm}>Cancel</button>
+                <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
             </form>
         </div>
+        ) : ("")}
         {appointments.map(appointment => <AppointmentCard key={appointment.id} appointment={appointment} />)}
         </>
     )

@@ -1,26 +1,21 @@
 import { useOutletContext } from "react-router-dom";
 import DoctorCard from "./DoctorCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Doctors() {
     const {doctors, setDoctors} = useOutletContext();
+    const [isUpdating, setIsUpdating] = useState(false);
+
+    //Post form states
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastname] = useState("");
     const [npi, setNPI] = useState("");
     const [gender, setGender] = useState("");
     const [field, setField] = useState("");
-
+    
     //Pop-up form
-    useEffect(() => {
-        handleCloseForm()
-    }, [])
-
-    function handleOpenForm() {
-        document.getElementById("doctorForm").style.display = "block";
-    }
-
-    function handleCloseForm() {
-        document.getElementById("doctorForm").style.display = "none";
+    function handleToggleForm() {
+        setIsUpdating(!isUpdating)
     }
 
     //Form data
@@ -74,8 +69,9 @@ function Doctors() {
     return(
         <>
         <h1>Doctor Index</h1>
-        <button className="open-button" onClick={handleOpenForm}>Add New Doctor</button>
-            <div className="form-popup" id="doctorForm" onSubmit={handleAddSubmit}>
+        <button className="open-button" onClick={handleToggleForm}>Add New Doctor</button>
+            {isUpdating ? (
+                <div className="form-popup" id="doctorForm" onSubmit={handleAddSubmit}>
                 <form class="form-container">
                     <label>First Name</label>
                     <input type="text" placeholder="First Name" name="firstName" value={firstName} onChange={handleFormInput} required/>
@@ -93,9 +89,10 @@ function Doctors() {
                     <input type="text" placeholder="Gender" name="gender" value={gender} onChange={handleFormInput} required/>
 
                     <button type="submit" className="btn">Add</button>
-                    <button type="button" className="btn cancel" onClick={handleCloseForm}>Cancel</button>
+                    <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
                 </form>
             </div>
+            ) : ("")}
         {doctors.map(doctor => <DoctorCard key={doctor.id} doctor={doctor}/>)}
         </>
     )

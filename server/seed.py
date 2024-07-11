@@ -94,6 +94,7 @@ def create_appointments(patients, doctors):
             date = date,
             hour = fake.random_int(min = 8, max = 17),
             reason = reason_generator(randint(0,9)),
+            notes = fake.text(),
             patient_id = choice(patients).id,
             doctor_id = choice(doctors).id
         )

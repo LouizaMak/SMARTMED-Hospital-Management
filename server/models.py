@@ -39,6 +39,7 @@ class Appointment(db.Model, SerializerMixin):
     date = db.Column(db.String, nullable = False)
     hour = db.Column(db.Integer, nullable = False)
     reason = db.Column(db.String, nullable = False)
+    notes = db.Column(db.String)
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
 

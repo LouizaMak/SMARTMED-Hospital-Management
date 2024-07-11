@@ -76,7 +76,7 @@ class AppointmentDetails(Resource):
             return appointment.to_dict(), 200
         return {"message": "Appointment not found"}, 404
 
-    def update(self):
+    def update(self, id):
         pass
 
     def delete(self, id):

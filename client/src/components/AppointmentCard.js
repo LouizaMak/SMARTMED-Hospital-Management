@@ -21,7 +21,7 @@ function AppointmentCard({appointment}) {
     return(
         <div>
             <h3>{appointment.date} {generateTime(appointment.hour)}</h3>
-            <button onClick={() => handleUpdate(appointment.id)}>Update</button>
+            <button onClick={() => handleUpdate(appointment.id)}>Overview</button>
             <p>Doctor: {doctor.last_name}, {doctor.first_name}</p>
             <p>Patient: {patient.last_name}, {patient.first_name}</p>
             <p>Reason: {appointment.reason}</p>

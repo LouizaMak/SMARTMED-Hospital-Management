@@ -13,11 +13,18 @@ function AppointmentDetails() {
     const [hour, setHour] = useState("")
     const [reason, setReason] = useState("")
     const [doctor, setDoctor] = useState("")
+    const [notes, setNotes] = useState("")
 
     useEffect(() => {
         fetch(`http://127.0.0.1:5555/appointments/${id}`)
         .then(res => res.json())
-        .then(appointment => setAppointment(appointment))
+        .then(appointment => {
+            setAppointment(appointment)
+            setDate(appointment.date)
+            setHour(appointment.hour)
+            setReason(appointment.reason)
+            setNotes(appointment.notes)
+        })
     }, [])
 
     function generateTime(hour) {
@@ -44,6 +51,8 @@ function AppointmentDetails() {
             setHour(input)
         } else if(field === "reason") {
             setReason(input)
+        } else if(field === "notes") {
+            setNotes(input)
         } else {
             setDoctor(input)
         }
@@ -110,6 +119,9 @@ function AppointmentDetails() {
 
                             <label>Reason</label>
                             <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
+
+                            <label>Notes</label>
+                            <input type="text" placeholder="Notes" name="notes" value={notes} onChange={handleFormInput} required/>
 
                             <button type="submit" className="btn">Confirm</button>
                             <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>

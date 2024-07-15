@@ -1,10 +1,12 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from datetime import datetime, date
 
 from config import db
 
-class Patient(db.Model, SerializerMixin):
+class Patient(db.Model, SerializerMixin): 
+
     __tablename__ = 'patients'
 
     id = db.Column(db.Integer, primary_key = True)
@@ -30,7 +32,22 @@ class Patient(db.Model, SerializerMixin):
         if value == "F" or value == "M":
             return value
         else:
-            raise ValueError("Please enter either F or M for the patient's biological gender.")
+            raise ValueError("Please enter either capital F or M for the patient's biological gender.")
+        
+    @validates('birthday')
+    def validate_birthday(self, key, value):
+        try:
+            birthday = datetime.strptime(value, "%Y-%m-%d").date()
+        except ValueError:
+            raise ValueError("Invalid date format. Please use YYYY-MM-DD format.")
+        
+        if birthday > date.today():
+            raise ValueError("Birthday cannot be a future date.")
+        
+        if birthday < date(1913, 1, 1):
+            raise ValueError("Birthday is too far in the past. Please enter a valid date.")
+
+        return value
 
 class Appointment(db.Model, SerializerMixin):
     __tablename__ = 'appointments'

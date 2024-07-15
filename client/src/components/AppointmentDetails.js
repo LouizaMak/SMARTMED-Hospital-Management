@@ -110,7 +110,16 @@ function AppointmentDetails() {
     } else {
         return (
             <>
+                <div>
+                    <h3>Appointment Overview</h3>
+                    <h3>{appointment.date} {generateTime(appointment.hour)}</h3>
+                    <p>Reason: {appointment.reason}</p>
+                    <p>Doctor: {appointment.doctor.last_name}, {appointment.doctor.first_name}</p>
+                    <p>Patient: {appointment.patient.last_name}, {appointment.patient.first_name}</p>
+                    <p>Notes: {appointment.notes}</p>
+                </div>
                 <button className="open-button" onClick={handleToggleForm}>Update</button>
+                <button onClick={handleDelete}>Delete</button>
                 {isUpdating ? (
                     <div className="form-popup" id="updateForm">
                         <form className="form-container" onSubmit={handleUpdate}>
@@ -134,15 +143,6 @@ function AppointmentDetails() {
                         </form>
                     </div>
                 ) : ("")}
-                <div>
-                    <h3>Appointment Overview</h3>
-                    <button onClick={handleDelete}>Delete</button>
-                    <h3>{appointment.date} {generateTime(appointment.hour)}</h3>
-                    <p>Reason: {appointment.reason}</p>
-                    <p>Doctor: {appointment.doctor.last_name}, {appointment.doctor.first_name}</p>
-                    <p>Patient: {appointment.patient.last_name}, {appointment.patient.first_name}</p>
-                    <p>Notes: {appointment.notes}</p>
-                </div>
             </>
         )
     }

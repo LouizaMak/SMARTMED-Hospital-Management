@@ -5,10 +5,6 @@ function NavBar() {
     return (
         <nav>
             <NavLink
-            to="/"
-            className="nav-link"
-            activeClassName="active">Home</NavLink>
-            <NavLink
             to="/patients"
             className="nav-link"
             activeClassName="active">Patients Index</NavLink>

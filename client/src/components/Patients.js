@@ -50,14 +50,18 @@ function Patients() {
                 gender: gender
             })
         })
-        .then(res => res.json())
-        .then(newPatient => {
-            setPatients([...patients, newPatient])
-            clearForm()
-            handleToggleForm()
+        .then(res => res.json().then(data => ({ status: res.status, body: data})))
+        .then(data => {
+            if (data.status === 201) {
+                setPatients([...patients, data.body])
+                clearForm()
+                handleToggleForm()
+            } else {
+                throw new Error(data.body.error)
+            }
         })
         .catch(error => {
-            console.error("Error adding new patient:", error)
+            alert(`Error adding new patient. ${error.message}`)
         })
     }
 

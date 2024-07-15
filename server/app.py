@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
 
 # Local imports
@@ -19,17 +19,21 @@ class PatientIndex(Resource):
     
     def post(self):
         data = request.get_json()
-        new_patient = Patient(
-            first_name = data.get("first_name"),
-            last_name = data.get("last_name"),
-            birthday = data.get("birthday"),
-            age = data.get("age"),
-            gender = data.get("gender")
-        )
-        db.session.add(new_patient)
-        db.session.commit()
-
-        return new_patient.to_dict(), 201 
+        try:
+            new_patient = Patient(
+                first_name = data.get("first_name"),
+                last_name = data.get("last_name"),
+                birthday = data.get("birthday"),
+                age = data.get("age"),
+                gender = data.get("gender")
+            )
+            db.session.add(new_patient)
+            db.session.commit()
+            return new_patient.to_dict(), 201 
+        except ValueError as e:
+            response = jsonify({"error": str(e)})
+            response.status_code = 400
+            return response
     
 class DoctorIndex(Resource):
     def get(self):

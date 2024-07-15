@@ -85,6 +85,11 @@ def reason_generator(num):
                "Skin issues", "Cholesterol concerns"]
     return reasons[num]
 
+def hour_generator():
+    hour = str(fake.random_int(min = 8, max = 17))
+    minutes = fake.random_element([":00", ":30"])
+    return hour + minutes
+
 def create_appointments(patients, doctors):
     appointments = []
     for _ in range(20):
@@ -92,7 +97,7 @@ def create_appointments(patients, doctors):
         date = date_obj.strftime('%Y-%m-%d')
         a = Appointment(
             date = date,
-            hour = fake.random_int(min = 8, max = 17),
+            hour = hour_generator(),
             reason = reason_generator(randint(0,9)),
             notes = fake.text(),
             patient_id = choice(patients).id,

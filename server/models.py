@@ -37,7 +37,7 @@ class Appointment(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.String, nullable = False)
-    hour = db.Column(db.Integer, nullable = False)
+    hour = db.Column(db.String, nullable = False)
     reason = db.Column(db.String, nullable = False)
     notes = db.Column(db.String)
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
@@ -48,20 +48,20 @@ class Appointment(db.Model, SerializerMixin):
 
     serialize_rules = ('-patient.appointments', '-doctor.appointments')
 
-    @validates('hour')
-    def validate_age(self, key, value):
-        if 8 <= int(value) <= 17:
-            return value
-        else:
-            raise ValueError("Patient's age is invalid. Please enter an age between 0 and 110 inclusive.")
+    # @validates('hour')
+    # def validate_age(self, key, value):
+    #     if 8 <= int(value) <= 17:
+    #         return value
+    #     else:
+    #         raise ValueError("Patient's age is invalid. Please enter an age between 0 and 110 inclusive.")
         
-    @validates('date')
-    def validate_date(self, key, value):
-        array = value.split("-")
-        if int(array[0]) >= 2024 and 1 <= int(array[1]) <= 12 and 1 <= int(array[2]) <= 31:
-            return value
-        else:
-            raise ValueError("Date is invalid. Please check that month, day, and year is after today's date.")
+    # @validates('date')
+    # def validate_date(self, key, value):
+    #     array = value.split("-")
+    #     if int(array[0]) >= 2024 and 1 <= int(array[1]) <= 12 and 1 <= int(array[2]) <= 31:
+    #         return value
+    #     else:
+    #         raise ValueError("Date is invalid. Please check that month, day, and year is after today's date.")
 
 class Doctor(db.Model, SerializerMixin):
     __tablename__ = 'doctors'

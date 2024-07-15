@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import dayjs from 'dayjs';
+import Calendar from "./Calendar";
 
 function AppointmentDetails() {
     const {appointments, setAppointments, doctors} = useOutletContext();
@@ -7,6 +9,7 @@ function AppointmentDetails() {
     const [appointment, setAppointment] = useState();
     const navigate = useNavigate();
     const [isUpdating, setIsUpdating] = useState(false);
+    const [dateObj, setDateObj] = useState(dayjs(new Date()))
     
     //Update form states
     const [date, setDate] = useState("")
@@ -27,13 +30,11 @@ function AppointmentDetails() {
         })
     }, [])
 
-    function generateTime(hour) {
-
-        if (parseInt(hour) <= 12) {
-            return hour + ":00AM"
-        } else {
-            return hour - 12 + ":00PM"
-        }
+    //Passed to Calendar component
+    function handleDateChange(dateObj) {
+        setDateObj(dateObj)
+        setDate(dateObj.toISOString().slice(0,10))
+        setHour(`${dateObj.$H > 12 ? (dateObj.$H).toString()-12 : (dateObj.$H).toString()}:${dateObj.$m.toString().padStart(2, '0')}`)
     }
 
     //Pop-up form
@@ -96,6 +97,14 @@ function AppointmentDetails() {
         .then(navigate('/appointments'))
     }
 
+    function generateTime(time) {
+        let timeParts = time.split(':')
+        const hour = parseInt(timeParts[0])
+        const period = hour >= 12 ? 'PM' : 'AM'
+        const hour12 = hour % 12 || 12
+        return `${hour12}:${timeParts[1]} ${period}`
+    }
+
     if (!appointment) {
         return <p>Loading...</p>
     } else {
@@ -105,11 +114,8 @@ function AppointmentDetails() {
                 {isUpdating ? (
                     <div className="form-popup" id="updateForm">
                         <form className="form-container" onSubmit={handleUpdate}>
-                            <label>Date</label>
-                            <input type="text" placeholder="Date" name="date" value={date} onChange={handleFormInput} required/>
-
-                            <label>Hour</label>
-                            <input type="text" placeholder="Hour" name="hour" value={hour} onChange={handleFormInput} required/>
+                            <label>Date & Time</label>
+                            <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
 
                             <label>Doctor</label>
                             <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>

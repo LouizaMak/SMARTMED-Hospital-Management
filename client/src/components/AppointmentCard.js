@@ -5,13 +5,12 @@ function AppointmentCard({appointment}) {
     const patient = appointment.patient;
     const navigate = useNavigate();
 
-    function generateTime(hour) {
-
-        if (parseInt(hour) <= 12) {
-            return hour + ":00AM"
-        } else {
-            return hour - 12 + ":00PM"
-        }
+    function generateTime(time) {
+        let timeParts = time.split(':')
+        const hour = parseInt(timeParts[0])
+        const period = hour >= 12 ? 'PM' : 'AM'
+        const hour12 = hour % 12 || 12
+        return `${hour12}:${timeParts[1]} ${period}`
     }
 
     const handleUpdate = (id) => {

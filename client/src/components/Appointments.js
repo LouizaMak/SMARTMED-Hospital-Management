@@ -1,5 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import React, { useState } from "react";
+import dayjs from 'dayjs';
+import Calendar from "./Calendar";
 import AppointmentCard from "./AppointmentCard";
 
 function Appointments() {
@@ -9,8 +11,9 @@ function Appointments() {
     const [isUpdating, setIsUpdating] = useState(false);
 
     //Post form states
-    const [date, setDate] = useState("");
-    const [hour, setHour] = useState("");
+    const [dateObj, setDateObj] = useState(dayjs(new Date()))
+    const [date, setDate] = useState("")
+    const [hour, setHour] = useState("")
     const [reason, setReason] = useState("");
     const [patient, setPatient] = useState("");
     const [doctor, setDoctor] = useState("");
@@ -24,11 +27,7 @@ function Appointments() {
     function handleFormInput(event) {
         const field = event.target.name;
         let input = event.target.value;
-        if(field === "date") {
-            setDate(input)
-        } else if(field === "hour") {
-            setHour(input)
-        } else if(field === "reason") {
+        if(field === "reason") {
             setReason(input)
         } else if(field === "patient") {
             setPatient(input)
@@ -55,17 +54,22 @@ function Appointments() {
         .then(res => res.json())
         .then(newAppointment => {
             setAppointments([...appointments, newAppointment])
-            clearForm()
+            setReason("")
             handleToggleForm()
         })
     }
 
-    function clearForm() {
-        setDate("")
-        setHour("")
-        setReason("")
-    }  
+    console.log(dateObj)
 
+    //Passed to Calendar component
+    function handleDateChange(dateObj) {
+        setDateObj(dateObj)
+        setDate(dateObj.toISOString().slice(0,10))
+        setHour(`${dateObj.$H}:${dateObj.$m.toString().padStart(2, '0')}`)
+    }
+
+    console.log(dateObj)
+    
     return(
         <>
         <h1>Appointments</h1>
@@ -73,22 +77,19 @@ function Appointments() {
         {isUpdating ? (
             <div className="form-popup" id="appointmentForm">
                 <form className="form-container" onSubmit={handleAddSubmit}>
-                    <label>Date</label>
-                    <input type="text" placeholder="Date" name="date" value={date} onChange={handleFormInput} required/>
-
-                    <label>Hour</label>
-                    <input type="text" placeholder="Hour" name="hour" value={hour} onChange={handleFormInput} required/>
-
+                    <label>Date & Time</label>
+                    <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
+                
                     <label>Doctor</label>
                     <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
                         <option value="" disabled>Select Doctor</option>
-                        {doctors.map(doctor => <option value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
+                        {doctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
                     </select>
 
                     <label>Patient</label>
                     <select name="patient" placeholder="patients" defaultValue={""} onChange={handleFormInput} required>
                         <option value="" disabled>Select Patient</option>
-                        {patients.map(patient => <option value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
+                        {patients.map(patient => <option kay={patient.id} value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
                     </select>
         
                     <label>Reason</label>

@@ -79,4 +79,26 @@ class Doctor(db.Model, SerializerMixin):
 
     serialize_rules = ('-appointments.doctor',)
 
+    @validates('npi')
+    def validate_npi(self, key, value):
+        if len(value) == 10 and value.isnumeric():
+            return value
+        else:
+            raise ValueError('Invalid NPI, please make sure NPI only consists of 10 numbers.')
+        
+    @validates('gender')
+    def validate_gender(self, key, value):
+        if value == "F" or value == "M":
+            return value
+        else:
+            raise ValueError("Please enter either capital F or M for the doctor's gender.")
+        
+    @validates('field')
+    def validate_field(self, key, value):
+        if len(value) == 10 and value.endswith('X'):
+            return value
+        else:
+            raise ValueError('Make sure taxonomy code consists of 10 characters that end with letter "X"')
+
+
 

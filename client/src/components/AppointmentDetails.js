@@ -10,6 +10,9 @@ function AppointmentDetails() {
     const navigate = useNavigate();
     const [isUpdating, setIsUpdating] = useState(false);
     const [dateObj, setDateObj] = useState(dayjs(new Date()))
+
+    //Available doctors per appointment date and time
+    const [availableDoctors, setAvailableDoctors] = useState(doctors)
     
     //Update form states
     const [date, setDate] = useState("")
@@ -32,9 +35,20 @@ function AppointmentDetails() {
 
     //Passed to Calendar component
     function handleDateChange(dateObj) {
+        const newDate = dateObj.toISOString().slice(0,10)
+        const newHour = `${dateObj.$H}:${dateObj.$m.toString().padStart(2, '0')}`
         setDateObj(dateObj)
-        setDate(dateObj.toISOString().slice(0,10))
-        setHour(`${dateObj.$H > 12 ? (dateObj.$H).toString()-12 : (dateObj.$H).toString()}:${dateObj.$m.toString().padStart(2, '0')}`)
+        setDate(newDate)
+        setHour(newHour)
+        checkDoctors(newDate, newHour)
+    }
+
+    function checkDoctors(date, hour) {
+        const filteredDoctors = doctors.filter(doctor => {
+            return doctor.appointments.every(appointment => 
+                appointment.date !== date || appointment.hour !== hour
+            )})
+        setAvailableDoctors(filteredDoctors)
     }
 
     //Pop-up form
@@ -129,7 +143,7 @@ function AppointmentDetails() {
                             <label>Doctor</label>
                             <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
                                 <option value="" disabled>Select Doctor</option>
-                                {doctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
+                                {availableDoctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
                             </select>
 
                             <label>Reason</label>

@@ -42,17 +42,21 @@ class DoctorIndex(Resource):
     
     def post(self):
         data = request.get_json()
-        new_doctor = Doctor(
-            npi = data.get("npi"),
-            first_name = data.get("first_name"),
-            last_name = data.get("last_name"),
-            gender = data.get("gender"),
-            field = data.get("field")
-        )
-        db.session.add(new_doctor)
-        db.session.commit()
-
-        return new_doctor.to_dict(), 201
+        try:
+            new_doctor = Doctor(
+                npi = data.get("npi"),
+                first_name = data.get("first_name"),
+                last_name = data.get("last_name"),
+                gender = data.get("gender"),
+                field = data.get("field")
+            )
+            db.session.add(new_doctor)
+            db.session.commit()
+            return new_doctor.to_dict(), 201
+        except ValueError as e:
+            response = jsonify({"error": str(e)})
+            response.status_code = 400
+            return response
     
 class AppointmentIndex(Resource):
     def get(self):

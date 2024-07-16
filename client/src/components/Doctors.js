@@ -50,11 +50,18 @@ function Doctors() {
                 npi: npi
             })
         })
-        .then(res => res.json())
-        .then(newDoctor => {
-            setDoctors([...doctors, newDoctor])
-            clearForm()
-            handleToggleForm()
+        .then(res => res.json().then(data => ({ status: res.status, body: data})))
+        .then(data => {
+            if (data.status === 201) {
+                setDoctors([...doctors, data.body])
+                clearForm()
+                handleToggleForm()
+            } else {
+                throw new Error(data.body.error)
+            }
+        })
+        .catch(error => {
+            alert(`Error adding new doctor. ${error.message}`)
         })
     }
 

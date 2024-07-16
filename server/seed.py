@@ -12,7 +12,7 @@ from app import app
 from models import db, Patient, Doctor, Appointment
 
 def birthday_calculator(age):
-    string = [str(2024 - age), "0" + str(randint(1,6)), "0" + str(randint(1,30))]
+    string = [str(2024 - age), str(randint(1,6)).rjust(2, '0'), str(randint(1,30)).rjust(2, '0')]
     return '-'.join(string)
 
 def create_patients():

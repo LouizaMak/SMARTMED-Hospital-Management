@@ -132,7 +132,7 @@ function AppointmentDetails() {
                     <p>Patient: {appointment.patient.last_name}, {appointment.patient.first_name}</p>
                     <p>Notes: {appointment.notes}</p>
                 </div>
-                <button className="open-button" onClick={handleToggleForm}>Update</button>
+                <button className="overview-open-button" onClick={handleToggleForm}>Update</button>
                 <button onClick={handleDelete}>Delete</button>
                 {isUpdating ? (
                     <div className="form-popup" id="updateForm">

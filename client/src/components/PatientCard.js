@@ -1,10 +1,12 @@
+import style from './pageStyle.css'
+
 function PatientCard({patient}) {
+    
     return(
-        <div>
+        <div className="card">
             <h3>{patient.last_name}, {patient.first_name} </h3>
-            <p>Birthday: {patient.birthday}</p>
-            <p>Age: {patient.age}</p>
-            <p>Gender: {patient.gender}</p>
+            <p>Birthday: {patient.birthday} [{patient.age}]</p>
+            <p>Biological Gender: {patient.gender}</p>
         </div>
     )
 }

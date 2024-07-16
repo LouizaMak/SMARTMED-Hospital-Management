@@ -1,5 +1,6 @@
-* {
+body {
     background-color: #f2f9ff;
+    font-family: 'Rosario', Arial, sans-serif;
 }
 
 /*Sticky inline header with padding*/
@@ -25,7 +26,6 @@ nav {
 .nav-link {
     text-decoration: none;
     color: black;
-    font-family: 'Rosario', Arial, sans-serif;
     padding: 10px;
     border-radius: 15px;
     background-color: white;

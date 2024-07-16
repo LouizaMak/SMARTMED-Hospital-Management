@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import DoctorCard from "./DoctorCard";
 import { useState } from "react";
+import style from './pageStyle.css';
 
 function Doctors() {
     const {doctors, setDoctors} = useOutletContext();
@@ -76,8 +77,10 @@ function Doctors() {
 
     return(
         <>
-        <h1>Doctor Index</h1>
-        <button className="open-button" onClick={handleToggleForm}>Add New Doctor</button>
+            <div className="title">
+                <h1>Doctors Index</h1>
+                <button className="open-button" onClick={handleToggleForm}>New Doctor</button>
+            </div>
             {isUpdating ? (
                 <div className="form-popup" id="doctorForm" >
                     <form className="form-container" onSubmit={handleAddSubmit}>
@@ -101,7 +104,9 @@ function Doctors() {
                     </form>
             </div>
             ) : ("")}
-        {doctors.map(doctor => <DoctorCard key={doctor.id} doctor={doctor}/>)}
+        <div className="card-container">
+            {doctors.map(doctor => <DoctorCard key={doctor.id} doctor={doctor}/>)}
+        </div>
         </>
     )
 }

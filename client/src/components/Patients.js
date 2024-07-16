@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import PatientCard from "./PatientCard";
 import { useState } from "react";
+import style from './pageStyle.css';
 
 function Patients() {
     const {patients, setPatients} = useOutletContext();
@@ -75,8 +76,10 @@ function Patients() {
 
     return (
         <>
-            <h1>Patient Index</h1>
-            <button className="open-button" onClick={handleToggleForm}>Add New Patient</button>
+            <div className="title">
+                <h1>Patients Index</h1>
+                <button className="open-button" onClick={handleToggleForm}>New Patient</button>
+            </div>
             {isUpdating ? (
                 <div className="form-popup" id="patientForm" >
                     <form className="form-container" onSubmit={handleAddSubmit}>
@@ -100,7 +103,9 @@ function Patients() {
                     </form>
                 </div>
             ) : ("")}
-            {patients.map(patient => <PatientCard key={patient.id} patient={patient}/>)}
+            <div className="card-container">
+                {patients.map(patient => <PatientCard key={patient.id} patient={patient}/>)}
+            </div>
         </>
     )
 }

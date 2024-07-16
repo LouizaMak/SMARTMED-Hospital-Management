@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import dayjs from 'dayjs';
 import Calendar from "./Calendar";
 import AppointmentCard from "./AppointmentCard";
+import style from './pageStyle.css';
 
 function Appointments() {
     const {appointments, setAppointments} = useOutletContext();
@@ -82,35 +83,39 @@ function Appointments() {
 
     return(
         <>
-        <h1>Appointments</h1>
-        <button className="open-button" onClick={handleToggleForm}>Schedule New Appointment</button>
-        {isUpdating ? (
-            <div className="form-popup" id="appointmentForm">
-                <form className="form-container" onSubmit={handleAddSubmit}>
-                    <label>Date & Time</label>
-                    <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
-                
-                    <label>Doctor</label>
-                    <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
-                        <option value="" disabled>Select Doctor</option>
-                        {availableDoctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
-                    </select>
+            <div className="title">
+                <h1>Appointments</h1>
+                <button className="open-button" onClick={handleToggleForm}>Schedule Appointment</button>
+            </div>
+            {isUpdating ? (
+                <div className="form-popup" id="appointmentForm">
+                    <form className="form-container" onSubmit={handleAddSubmit}>
+                        <label>Date & Time</label>
+                        <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
+                    
+                        <label>Doctor</label>
+                        <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
+                            <option value="" disabled>Select Doctor</option>
+                            {availableDoctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
+                        </select>
 
-                    <label>Patient</label>
-                    <select name="patient" placeholder="patients" defaultValue={""} onChange={handleFormInput} required>
-                        <option value="" disabled>Select Patient</option>
-                        {patients.map(patient => <option kay={patient.id} value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
-                    </select>
-        
-                    <label>Reason</label>
-                    <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
+                        <label>Patient</label>
+                        <select name="patient" placeholder="patients" defaultValue={""} onChange={handleFormInput} required>
+                            <option value="" disabled>Select Patient</option>
+                            {patients.map(patient => <option kay={patient.id} value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
+                        </select>
+            
+                        <label>Reason</label>
+                        <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
 
-                    <button type="submit" className="btn">Add</button>
-                    <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
-                </form>
-        </div>
-        ) : ("")}
-        {appointments.map(appointment => <AppointmentCard key={appointment.id} appointment={appointment} />)}
+                        <button type="submit" className="btn">Add</button>
+                        <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
+                    </form>
+            </div>
+            ) : ("")}
+            <div className="card-container">
+                {appointments.map(appointment => <AppointmentCard key={appointment.id} appointment={appointment} />)}
+            </div>
         </>
     )
 }

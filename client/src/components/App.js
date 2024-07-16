@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from './NavBar'
+import style from './appNavBarStyle.css'
+import logo from '../images/smartmed_logo.png'
 
 function App() {
   const [patients, setPatients] = useState([]);
@@ -28,8 +30,8 @@ function App() {
 
   return (
     <>
-      <h1>Hospital Manager</h1>
-      <header>
+      <header className="site-header">
+        <img src={logo} alt="medical logo" width="125"/>
         <NavBar />
       </header>
       <Outlet context={{patients, setPatients, doctors, setDoctors, appointments, setAppointments}}/>

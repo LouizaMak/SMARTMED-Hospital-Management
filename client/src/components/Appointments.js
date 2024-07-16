@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import dayjs from 'dayjs';
 import Calendar from "./Calendar";
 import AppointmentCard from "./AppointmentCard";
-import style from './pageStyle.css';
+import './pageStyle.css';
 
 function Appointments() {
     const {appointments, setAppointments} = useOutletContext();

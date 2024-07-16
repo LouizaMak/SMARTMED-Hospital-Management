@@ -1,8 +1,8 @@
-.title {
+.overview-title {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding-inline: 15%;
+    padding-inline: 20%;
 }
 
 .open-button {

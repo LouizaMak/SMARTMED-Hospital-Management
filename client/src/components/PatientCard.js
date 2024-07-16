@@ -1,4 +1,4 @@
-import style from './pageStyle.css'
+import './pageStyle.css'
 
 function PatientCard({patient}) {
     

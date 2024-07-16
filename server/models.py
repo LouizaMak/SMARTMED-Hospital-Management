@@ -26,13 +26,6 @@ class Patient(db.Model, SerializerMixin):
             return value
         else:
             raise ValueError("Patient's age is invalid. Please enter an age between 0 and 110 inclusive.")
-    
-    @validates('gender')
-    def validate_gender(self, key, value):
-        if value == "F" or value == "M":
-            return value
-        else:
-            raise ValueError("Please enter either capital F or M for the patient's biological gender.")
         
     @validates('birthday')
     def validate_birthday(self, key, value):
@@ -85,13 +78,6 @@ class Doctor(db.Model, SerializerMixin):
             return value
         else:
             raise ValueError('Invalid NPI, please make sure NPI only consists of 10 numbers.')
-        
-    @validates('gender')
-    def validate_gender(self, key, value):
-        if value == "F" or value == "M":
-            return value
-        else:
-            raise ValueError("Please enter either capital F or M for the doctor's gender.")
         
     @validates('field')
     def validate_field(self, key, value):

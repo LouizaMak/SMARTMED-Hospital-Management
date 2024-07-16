@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import PatientCard from "./PatientCard";
 import { useState } from "react";
-import style from './pageStyle.css';
+import './pageStyle.css';
 
 function Patients() {
     const {patients, setPatients} = useOutletContext();

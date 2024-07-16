@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import dayjs from 'dayjs';
 import Calendar from "./Calendar";
+import "./overviewStyle.css";
 
 function AppointmentDetails() {
     const {appointments, setAppointments, doctors} = useOutletContext();
@@ -124,39 +125,54 @@ function AppointmentDetails() {
     } else {
         return (
             <>
-                <div>
-                    <h3>Appointment Overview</h3>
-                    <h3>{appointment.date} {generateTime(appointment.hour)}</h3>
-                    <p>Reason: {appointment.reason}</p>
-                    <p>Doctor: {appointment.doctor.last_name}, {appointment.doctor.first_name}</p>
-                    <p>Patient: {appointment.patient.last_name}, {appointment.patient.first_name}</p>
-                    <p>Notes: {appointment.notes}</p>
+                <div className="overview-title">
+                    <h1>Appointment Overview</h1>
+                    <button className="overview-open-button" onClick={handleToggleForm}>Update</button>
+                    <button onClick={handleDelete}>Delete</button>
                 </div>
-                <button className="overview-open-button" onClick={handleToggleForm}>Update</button>
-                <button onClick={handleDelete}>Delete</button>
-                {isUpdating ? (
-                    <div className="form-popup" id="updateForm">
-                        <form className="form-container" onSubmit={handleUpdate}>
-                            <label>Date & Time</label>
-                            <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
+                <div className="box">
+                    <div className="box-content">
+                        <div>
+                            <h3>{appointment.date} {generateTime(appointment.hour)}</h3>
+                            <p>Patient: {appointment.patient.last_name}, {appointment.patient.first_name}</p>
+                            <p>Reason: {appointment.reason}</p>
+                            <p>Doctor: {appointment.doctor.last_name}, {appointment.doctor.first_name}</p>
+                            <p>Notes: {appointment.notes}</p>
+                        </div>
+                        {isUpdating ? (
+                            <div className="form-popup" id="updateForm">
+                                <h2>Updating Appointment Form</h2>
+                                <form className="form-container" onSubmit={handleUpdate}>
+                                    <div className="field">
+                                        <label>Date & Time:</label>
+                                        <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
+                                    </div>
 
-                            <label>Doctor</label>
-                            <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
-                                <option value="" disabled>Select Doctor</option>
-                                {availableDoctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
-                            </select>
+                                    <div className="field">
+                                        <label>Doctor:</label>
+                                        <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
+                                            <option value="" disabled>Select Doctor</option>
+                                            {availableDoctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
+                                        </select>
+                                    </div>
 
-                            <label>Reason</label>
-                            <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
+                                    <div className="field">
+                                        <label>Reason:</label>
+                                        <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
+                                    </div>
 
-                            <label>Notes</label>
-                            <input type="text" placeholder="Notes" name="notes" value={notes} onChange={handleFormInput} required/>
+                                    <div className="field">
+                                        <label>Notes:</label>
+                                        <textarea placeholder="N/a if none" name="notes" value={notes} onChange={handleFormInput} required></textarea>
+                                    </div>
 
-                            <button type="submit" className="btn">Confirm</button>
-                            <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
-                        </form>
+                                    <button type="submit" className="btn">Confirm</button>
+                                    <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>
+                                </form>
+                            </div>
+                        ) : ("")}
                     </div>
-                ) : ("")}
+                </div>
             </>
         )
     }

@@ -19,6 +19,7 @@ function Appointments() {
     const [date, setDate] = useState("")
     const [hour, setHour] = useState("")
     const [reason, setReason] = useState("");
+    const [notes, setNotes] = useState("")
     const [patient, setPatient] = useState("");
     const [doctor, setDoctor] = useState("");
 
@@ -35,6 +36,8 @@ function Appointments() {
             setReason(input)
         } else if(field === "patient") {
             setPatient(input)
+        } else if (field === "notes") {
+            setNotes(input)
         } else {
             setDoctor(input)
         }
@@ -51,6 +54,7 @@ function Appointments() {
                 date: date,
                 hour: hour,
                 reason: reason,
+                notes: notes,
                 patient_id: patient,
                 doctor_id: doctor
             })
@@ -59,6 +63,7 @@ function Appointments() {
         .then(newAppointment => {
             setAppointments([...appointments, newAppointment])
             setReason("")
+            setNotes("")
             handleToggleForm()
         })
     }
@@ -89,24 +94,38 @@ function Appointments() {
             </div>
             {isUpdating ? (
                 <div className="form-popup" id="appointmentForm">
+                    <h2>Schedule Appointment Form</h2>
                     <form className="form-container" onSubmit={handleAddSubmit}>
-                        <label>Date & Time</label>
-                        <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
+                        <div className="field">
+                            <label>Date & Time:</label>
+                            <Calendar dateObj={dateObj} onDateChange={handleDateChange}/>
+                        </div>
                     
-                        <label>Doctor</label>
-                        <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
-                            <option value="" disabled>Select Doctor</option>
-                            {availableDoctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
-                        </select>
+                        <div className="field">
+                            <label>Doctor:</label>
+                            <select name="doctor" placeholder="doctors" defaultValue={""} onChange={handleFormInput} required>
+                                <option value="" disabled>Select Doctor</option>
+                                {availableDoctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.last_name}, {doctor.first_name}</option>)}
+                            </select>
+                        </div>
 
-                        <label>Patient</label>
-                        <select name="patient" placeholder="patients" defaultValue={""} onChange={handleFormInput} required>
-                            <option value="" disabled>Select Patient</option>
-                            {patients.map(patient => <option kay={patient.id} value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
-                        </select>
-            
-                        <label>Reason</label>
-                        <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
+                        <div className="field">
+                            <label>Patient:</label>
+                            <select name="patient" placeholder="patients" defaultValue={""} onChange={handleFormInput} required>
+                                <option value="" disabled>Select Patient</option>
+                                {patients.map(patient => <option kay={patient.id} value={patient.id}>{patient.last_name}, {patient.first_name}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="field">
+                            <label>Reason:</label>
+                            <input type="text" placeholder="Reason" name="reason" value={reason} onChange={handleFormInput} required/>
+                        </div>
+
+                        <div className="field">
+                            <label>Notes:</label>
+                            <textarea placeholder="N/a if none" name="notes" value={notes} onChange={handleFormInput} required></textarea>
+                        </div>
 
                         <button type="submit" className="btn">Add</button>
                         <button type="button" className="btn cancel" onClick={handleToggleForm}>Cancel</button>

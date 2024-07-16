@@ -40,3 +40,70 @@
     border-radius: 10px;
     padding: 5px;
 }
+
+/* Orange pop-up box*/
+.form-popup {
+    position: fixed;
+    z-index: 1;
+    left: 42%;
+    top: 10%;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    background-color: rgb(255, 246, 220);
+    border-radius: 20px;
+    padding: 50px 100px 50px 100px;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.267), 0 2px 4px 0 rgba(0, 0, 0, 0.185);
+}
+
+/* Form content */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    font-size: 20px;
+}
+
+/* Group fields and labels*/
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-btns {
+    display: flex;
+    justify-content: center;
+}
+
+.radio-btns div {
+    display: flex;
+    align-items: center;
+    padding-inline: 10px;
+}
+
+.field input {
+    height: 30px;
+    font-size: 15px;
+}
+
+.field select {
+    height: 30px;
+    width: 200px;
+}
+
+.calendar {
+    width: 240px;
+    background-color: white;
+}
+
+textarea {
+    width: 200px;
+    height: 100px;
+}
+
+.form-container button {
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+}

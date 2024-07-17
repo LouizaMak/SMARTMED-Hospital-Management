@@ -13,6 +13,8 @@ function Patients() {
     const [birthday, setBirthday] = useState("");
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("")
 
     //Pop-up form
     function handleToggleForm() {
@@ -31,6 +33,10 @@ function Patients() {
             setAge(input)
         } else if(field === "birthday") {
             setBirthday(input)
+        } else if (field === "phone") {
+            setPhone(input)
+        } else if (field === "address") {
+            setAddress(input)
         } else {
             setGender(input)
         }
@@ -48,7 +54,9 @@ function Patients() {
                 last_name: lastName,
                 birthday: birthday,
                 age: age,
-                gender: gender
+                gender: gender,
+                phone: phone,
+                address: address
             })
         })
         .then(res => res.json().then(data => ({ status: res.status, body: data})))
@@ -72,6 +80,8 @@ function Patients() {
         setBirthday("")
         setAge("")
         setGender("")
+        setPhone("")
+        setAddress("")
     }
 
     return (
@@ -116,6 +126,16 @@ function Patients() {
                                     <input type="radio" id="m" name="gender" value="M" onChange={handleFormInput} checked={gender === 'M'} required/>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="field">
+                            <label>Phone Number:</label>
+                            <input type="text" placeholder="123-456-7890 or 1234567890" name="phone" value={phone} onChange={handleFormInput} required/>
+                        </div>
+
+                        <div className="field">
+                            <label>Address:</label>
+                            <input type="text" placeholder="1234 Alphabet St. Apple, MO 55555" name="address" value={address} onChange={handleFormInput} required/>
                         </div>
 
                         <button type="submit" className="btn">Add</button>

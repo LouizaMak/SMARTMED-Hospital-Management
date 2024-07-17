@@ -25,7 +25,9 @@ class PatientIndex(Resource):
                 last_name = data.get("last_name"),
                 birthday = data.get("birthday"),
                 age = data.get("age"),
-                gender = data.get("gender")
+                gender = data.get("gender"),
+                phone = data.get("phone"),
+                address = data.get("address")
             )
             db.session.add(new_patient)
             db.session.commit()

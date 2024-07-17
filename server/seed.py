@@ -15,6 +15,18 @@ def birthday_calculator(age):
     string = [str(2024 - age), str(randint(1,6)).rjust(2, '0'), str(randint(1,30)).rjust(2, '0')]
     return '-'.join(string)
 
+def generate_address():
+    string = f"{fake.street_address()} {fake.city()}, {fake.state_abbr()} {fake.zipcode()}"
+    return string
+
+def generate_number():
+    area_code = randint(100, 999)
+    central_office_code = randint(100, 999)
+    line_number = randint(1000, 9999)
+    
+    phone_number = f"{area_code}-{central_office_code}-{line_number}"
+    return phone_number
+
 def create_patients():
     patients = []
     for _ in range(10):
@@ -24,7 +36,9 @@ def create_patients():
         last_name = fake.last_name(),
         age = age_random,
         birthday = birthday_calculator(age_random),
-        gender = "F"
+        gender = "F",
+        phone = generate_number(),
+        address = generate_address()
         )
         patients.append(p)
     for _ in range(10):
@@ -34,7 +48,9 @@ def create_patients():
         last_name = fake.last_name(),
         age = age_random,
         birthday = birthday_calculator(age_random),
-        gender = "M"
+        gender = "M",
+        phone = generate_number(),
+        address = generate_address()
         )
         patients.append(p)
     return patients
@@ -59,7 +75,7 @@ def generate_taxonomy():
     
 def create_doctors():
     doctors = []
-    for _ in range(10):
+    for _ in range(5):
         d = Doctor(
             npi = generate_npi(),
             first_name = fake.first_name_female(),
@@ -68,7 +84,7 @@ def create_doctors():
             field = generate_taxonomy()
         )
         doctors.append(d)
-    for _ in range(10):
+    for _ in range(5):
         d = Doctor(
             npi = generate_npi(),
             first_name = fake.first_name_male(),

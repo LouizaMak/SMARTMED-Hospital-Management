@@ -15,6 +15,8 @@ class Patient(db.Model, SerializerMixin):
     birthday = db.Column(db.String, nullable = False)
     age = db.Column(db.Integer, nullable = False)
     gender = db.Column(db.String, nullable = False)
+    phone = db.Column(db.String, nullable = False)
+    address = db.Column(db.String, nullable = False)
 
     appointments = db.relationship('Appointment', back_populates='patient', cascade='all, delete-orphan')
 
@@ -41,6 +43,14 @@ class Patient(db.Model, SerializerMixin):
             raise ValueError("Birthday is too far in the past. Please enter a valid date.")
 
         return value
+
+    @validates('phone')
+    def validate_phone(self, key, value):
+        number = value.replace('-', '')
+        if len(number) == 10 and number.isnumeric():
+            return value
+        else:
+            raise ValueError("Please enter phone number in either 123-456-7890 or 1234567890 format.")
 
 class Appointment(db.Model, SerializerMixin):
     __tablename__ = 'appointments'

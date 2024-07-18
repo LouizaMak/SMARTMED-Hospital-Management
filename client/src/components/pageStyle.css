@@ -29,6 +29,12 @@
     padding: 10px 35px 10px 35px;
 }
 
+.patient-content {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+}
+
 /* Appointments page inline overview button */
 .date-overview {
     display: flex;

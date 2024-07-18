@@ -30,7 +30,7 @@ function Doctors() {
         } else if(field === "gender") {
             setGender(input)
         } else if(field === "npi") {
-            setNPI(input)
+            setNPI(parseInt(input))
         } else {
             setField(input)
         }
@@ -74,7 +74,6 @@ function Doctors() {
         setNPI("")
     }
 
-
     return(
         <>
             <div className="title">
@@ -97,7 +96,7 @@ function Doctors() {
 
                         <div className="field">
                             <label>NPI#:</label>
-                            <input type="text" placeholder="1*********" name="npi" value={npi} onChange={handleFormInput} required/>
+                            <input type="number" placeholder="1*********" name="npi" value={npi} onChange={handleFormInput} min="1000000000" max="1999999999" required/>
                         </div>
 
                         <div className="field">

@@ -60,7 +60,7 @@ def generate_npi():
     for i in range(1,10):
         npi_array.append(str(randint(0,9)))
     npi = ''.join(npi_array)
-    return npi
+    return int(npi)
 
 def generate_taxonomy():
     array = []

@@ -84,7 +84,7 @@ class Doctor(db.Model, SerializerMixin):
 
     @validates('npi')
     def validate_npi(self, key, value):
-        if len(value) == 10 and value.isnumeric():
+        if isinstance(value, int):
             return value
         else:
             raise ValueError('Invalid NPI, please make sure NPI only consists of 10 numbers.')

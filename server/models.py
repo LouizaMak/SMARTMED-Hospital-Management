@@ -46,8 +46,7 @@ class Patient(db.Model, SerializerMixin):
 
     @validates('phone')
     def validate_phone(self, key, value):
-        number = value.replace('-', '')
-        if len(number) == 10 and number.isnumeric():
+        if len(value) == 10 and value.isnumeric():
             return value
         else:
             raise ValueError("Please enter phone number in either 123-456-7890 or 1234567890 format.")

@@ -24,7 +24,7 @@ def generate_number():
     central_office_code = randint(100, 999)
     line_number = randint(1000, 9999)
     
-    phone_number = f"{area_code}-{central_office_code}-{line_number}"
+    phone_number = f"{area_code}{central_office_code}{line_number}"
     return phone_number
 
 def create_patients():

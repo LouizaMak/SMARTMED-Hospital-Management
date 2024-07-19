@@ -113,3 +113,7 @@ textarea {
     height: 30px;
     border-radius: 5px;
 }
+
+input.input-error, select.input-error {
+    border-color: #fc8181
+}

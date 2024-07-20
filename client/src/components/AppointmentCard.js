@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import style from './pageStyle.css'
+import './pageStyle.css';
 
 function AppointmentCard({appointment}) {
     const doctor = appointment.doctor;
